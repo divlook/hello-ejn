@@ -5,7 +5,7 @@ export const solution = (pikachu: number, candy: number) => {
     let raichu = 0
 
     while (true) {
-        if (pikachu === 0) {
+        if (pikachu <= 0) {
             break
         }
 
@@ -19,8 +19,10 @@ export const solution = (pikachu: number, candy: number) => {
 
         // 오박사에게 보낸다
         if (evPikachu === 0) {
-            pikachu--
-            candy++
+            const giftPikachu = evCandyCost - candy
+
+            pikachu -= giftPikachu
+            candy += giftPikachu
             continue
         }
 
