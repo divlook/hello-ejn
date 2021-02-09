@@ -1,5 +1,16 @@
 # EJN Frontend algorithm
 
+```bash
+# 폴더로 이동
+cd <workspace>/hello-ejn/algorithm
+
+# 패키지 설치
+yarn
+
+# 테스트 실행
+yarn test
+```
+
 ## 설명
 
 포켓몬고에서 당신의 경험치를 쉽게 올릴 수 있는 방법 중 하나는 잡은 포켓몬을 진화시키는 것 입니다.
