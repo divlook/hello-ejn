@@ -1,3 +1,9 @@
 # Hello EJN
 
-- [EJN Frontend algorithm]("./algorithm/README.md")
+## Algorithm
+
+- [EJN Frontend algorithm 문서로 이동]("./algorithm/README.md")
+
+## Assignment
+
+- [EJN Frontend assignment 문서로 이동]("./product/README.md")
