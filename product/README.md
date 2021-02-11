@@ -2,6 +2,8 @@
 
 ![ 스크린샷 ](/etc/screenshot.png)
 
+## 실행 방법
+
 ```bash
 # 폴더로 이동 (<workspace>/hello-ejn/product)
 cd ./product
@@ -11,6 +13,15 @@ yarn
 
 # devServer 실행
 yarn dev
+
+# http://localhost:8080
+```
+
+또는 아래 명령어를 사용하여 패키지 설치 없이 바로 실행할 수 있습니다.
+
+```bash
+# http://localhost:5000
+npx serve product/assignment
 ```
 
 ## 데모 사이트

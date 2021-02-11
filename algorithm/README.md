@@ -1,5 +1,7 @@
 # EJN Frontend algorithm
 
+## 실행 방법
+
 ```bash
 # 폴더로 이동 (<workspace>/hello-ejn/algorithm)
 cd ./algorithm
