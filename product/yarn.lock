@@ -5304,6 +5304,11 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
+jsstore@^3.11.4:
+  version "3.11.4"
+  resolved "https://registry.yarnpkg.com/jsstore/-/jsstore-3.11.4.tgz#55ca2d82a171110a095867ae7f67673d51db0ebe"
+  integrity sha512-1FE8N8hXVdw4WiROMAghm+vSfuRoEmkhgBJ+Pe2H5WHuxuuizCzzdzm3vICZ27+rc3pckWDdsux6tRAnuXqFlA==
+
 killable@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/killable/-/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"

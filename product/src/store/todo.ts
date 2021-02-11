@@ -7,6 +7,8 @@ import {
     Visibility,
     visibilityInitialValue,
 } from '@/libs/constant'
+import { TodoConfigService } from '@/jsstore/todo-config/todo-config.service'
+import { TodoListService } from '@/jsstore/todo-list/todo-list.service'
 
 export interface Todo {
     id: number
@@ -18,11 +20,11 @@ export interface Todo {
     createdMs: number
 }
 
-interface TodoPayload extends Partial<Omit<Todo, 'id'>> {
+export interface TodoPayload extends Partial<Omit<Todo, 'id'>> {
     id: number
 }
 
-interface UpdateParams {
+export interface UpdateParams {
     id: number
     subject?: string
     priority?: string
@@ -31,12 +33,11 @@ interface UpdateParams {
     completed?: boolean
 }
 
-interface TodoState {
+export interface TodoState {
     lastId: number
     list: Todo[]
     completedTodoVisibility: Visibility
     order: Order
-    indexing: Map<number, number>
 }
 
 export const enum CommitType {
@@ -60,7 +61,6 @@ const defaultState = (): TodoState => ({
     list: [],
     completedTodoVisibility: visibilityInitialValue,
     order: orderInitialValue,
-    indexing: new Map(),
 })
 
 export const todoModule: Module<TodoState, {}> = {
@@ -71,11 +71,8 @@ export const todoModule: Module<TodoState, {}> = {
         },
         [CommitType.TODO_SET_LIST]: (state, list: Todo[]) => {
             state.list = list
-            state.indexing.clear()
-            list.forEach((todo, index) => state.indexing.set(todo.id, index))
         },
         [CommitType.TODO_APPEND]: (state, todo: Todo) => {
-            state.indexing.set(todo.id, state.list.length)
             state.list.push(todo)
         },
         [CommitType.TODO_REMOVE]: (state, id: number) => {
@@ -85,10 +82,7 @@ export const todoModule: Module<TodoState, {}> = {
                 return
             }
 
-            const todo = state.list[index]
-
             state.list.splice(index, 1)
-            state.indexing.delete(todo.id)
         },
         [CommitType.TODO_UPDATE]: (state, todo: TodoPayload) => {
             const index = getIndex(state, todo.id)
@@ -148,6 +142,8 @@ export const todoModule: Module<TodoState, {}> = {
 
 export const useTodoStore = (store: Store<any>) => {
     const state: TodoState = store.state.todo
+    const todoConfigService = new TodoConfigService()
+    const todoListService = new TodoListService()
 
     return {
         state,
@@ -159,9 +155,7 @@ export const useTodoStore = (store: Store<any>) => {
                 return
             }
 
-            if (nextId < 0) {
-                nextId = 0
-            }
+            todoConfigService.setConfig({ lastId: nextId })
 
             store.commit(CommitType.TODO_SET_LAST_ID, nextId)
         },
@@ -195,15 +189,24 @@ export const useTodoStore = (store: Store<any>) => {
                 nextTodo.completedMs = 0
             }
 
-            nextTodo.id = state.lastId + 1
+            const lastIndex = state.list.length - 1
+            const lastTodo = state.list[lastIndex]
+            const lastId = Math.max(state.lastId, lastTodo?.id || 0)
+
+            nextTodo.id = lastId + 1
             nextTodo.createdMs = Date.now()
 
-            store.commit(CommitType.TODO_SET_LAST_ID, nextTodo.id)
+            todoListService.append(nextTodo as Todo)
+
+            this.setLastId(nextTodo.id)
+
             store.commit(CommitType.TODO_APPEND, nextTodo)
 
             return todo
         },
         remove(id: number) {
+            todoListService.remove(id)
+
             store.commit(CommitType.TODO_REMOVE, id)
         },
         update(params: UpdateParams) {
@@ -231,26 +234,25 @@ export const useTodoStore = (store: Store<any>) => {
                 payload.completedMs = params.completed ? Date.now() : 0
             }
 
+            todoListService.update(payload)
+
             store.commit(CommitType.TODO_UPDATE, payload)
         },
         setCompletedTodoVisibility(visibility: Visibility) {
-            store.commit(
-                CommitType.TODO_SET_COMPLETED_JOB_VISIBILITY,
-                visibility
-            )
+            const commitType = CommitType.TODO_SET_COMPLETED_JOB_VISIBILITY
+
+            todoConfigService.setConfig({ completedTodoVisibility: visibility })
+
+            store.commit(commitType, visibility)
         },
         setOrder(order: Order) {
+            todoConfigService.setConfig({ order })
+
             store.commit(CommitType.TODO_SET_ORDER, order)
         },
     }
 }
 
 function getIndex(state: TodoState, id: number) {
-    let index = state.indexing.get(id)
-
-    if (!index) {
-        index = state.list.findIndex((todo) => todo.id === id)
-    }
-
-    return index ?? -1
+    return state.list.findIndex((todo) => todo.id === id)
 }
