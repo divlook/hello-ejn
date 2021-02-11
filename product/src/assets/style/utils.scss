@@ -1,0 +1,76 @@
+.d-inline {
+    display: inline !important;
+}
+
+.d-block {
+    display: block !important;
+}
+
+.d-inline-block {
+    display: inline-block !important;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.d-inline-flex {
+    display: inline-flex !important;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+@for $spacing from 1 through 10 {
+    .m-#{$spacing} {
+        margin: #{$spacing / 4}rem !important;
+    }
+    .mr-#{$spacing} {
+        margin-right: #{$spacing / 4}rem !important;
+    }
+    .ml-#{$spacing} {
+        margin-left: #{$spacing / 4}rem !important;
+    }
+    .mt-#{$spacing} {
+        margin-top: #{$spacing / 4}rem !important;
+    }
+    .mb-#{$spacing} {
+        margin-bottom: #{$spacing / 4}rem !important;
+    }
+    .mx-#{$spacing} {
+        margin-left: #{$spacing / 4}rem !important;
+        margin-right: #{$spacing / 4}rem !important;
+    }
+    .my-#{$spacing} {
+        margin-top: #{$spacing / 4}rem !important;
+        margin-bottom: #{$spacing / 4}rem !important;
+    }
+    .p-#{$spacing} {
+        padding: #{$spacing / 4}rem !important;
+    }
+    .pr-#{$spacing} {
+        padding-right: #{$spacing / 4}rem !important;
+    }
+    .pl-#{$spacing} {
+        padding-left: #{$spacing / 4}rem !important;
+    }
+    .pt-#{$spacing} {
+        padding-top: #{$spacing / 4}rem !important;
+    }
+    .pb-#{$spacing} {
+        padding-bottom: #{$spacing / 4}rem !important;
+    }
+    .px-#{$spacing} {
+        padding-left: #{$spacing / 4}rem !important;
+        padding-right: #{$spacing / 4}rem !important;
+    }
+    .py-#{$spacing} {
+        padding-top: #{$spacing / 4}rem !important;
+        padding-bottom: #{$spacing / 4}rem !important;
+    }
+}
