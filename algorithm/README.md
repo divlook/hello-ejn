@@ -1,8 +1,8 @@
 # EJN Frontend algorithm
 
 ```bash
-# 폴더로 이동
-cd <workspace>/hello-ejn/algorithm
+# 폴더로 이동 (<workspace>/hello-ejn/algorithm)
+cd ./algorithm
 
 # 패키지 설치
 yarn
