@@ -1,16 +1,22 @@
 <template>
-    <main class="ejn-app">
+    <div class="ejn-app">
         <Todo />
-    </main>
+        <SelectModal />
+        <MemoModal />
+    </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import Todo from '@/components/Todo.vue'
+import Todo from '@/components/todo/Todo.vue'
+import SelectModal from '@/components/modal/SelectModal.vue'
+import MemoModal from '@/components/modal/MemoModal.vue'
 
 @Component({
     components: {
         Todo,
+        SelectModal,
+        MemoModal,
     },
 })
 export default class App extends Vue {}
@@ -23,7 +29,7 @@ export default class App extends Vue {}
     width: 100%;
     height: 100%;
     min-height: 720px;
-    background-color: #fff;
+    background-color: $color-electric-violet;
     display: flex;
     justify-content: center;
     align-items: center;
