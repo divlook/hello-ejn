@@ -11,3 +11,9 @@ body {
 body {
     font-family: 'Roboto', 'Noto Sans KR', sans-serif;
 }
+
+input:focus,
+textarea:focus,
+button:focus {
+    outline: 0;
+}
